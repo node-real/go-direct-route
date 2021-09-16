@@ -1,4 +1,4 @@
-module go-direct-route
+module github.com/node-real/go-direct-route
 
 go 1.16
 

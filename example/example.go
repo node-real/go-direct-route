@@ -15,9 +15,9 @@ import (
 	"github.com/ethereum/go-ethereum/ethclient"
 	"github.com/ethereum/go-ethereum/params"
 
-	"go-direct-route/client"
-	eabi "go-direct-route/example/abi"
-	"go-direct-route/example/utils"
+	"github.com/node-real/go-direct-route/client"
+	eabi "github.com/node-real/go-direct-route/example/abi"
+	"github.com/node-real/go-direct-route/example/utils"
 )
 
 var rpcEndPoint = "https://bsc-dataseed.binance.org"

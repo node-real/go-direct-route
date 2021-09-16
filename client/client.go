@@ -2,9 +2,10 @@ package client
 
 import (
 	"context"
+	"math/big"
+
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/rpc"
-	"math/big"
 )
 
 type Client struct {
