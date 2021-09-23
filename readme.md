@@ -65,6 +65,9 @@ bundleHash, err := directClient.SendBundle(context.Background(), bundle)
 
 After the bundle is successfully submitted, you may need wait at lest 3-60 seconds before the transaction been verified on chain.
 
+So please use `MaxBlockNumber` and `MaxTimestamp` a relative lager one, better 60 seconds later, otherwise nodereal may 
+get no chance to include the bundle.
+
 3. Query bundle
 
 ```
