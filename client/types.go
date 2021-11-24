@@ -25,3 +25,8 @@ type Bundle struct {
 	Hash              common.Hash
 	Price             *big.Int
 }
+
+type Status struct {
+	Status     int64            `json:"status"`
+	Validators map[string]int64 `json:"validators"`
+}

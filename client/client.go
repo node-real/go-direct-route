@@ -8,6 +8,8 @@ import (
 	"github.com/ethereum/go-ethereum/rpc"
 )
 
+const goSDKSource = "2"
+
 type Client struct {
 	rpc.Client
 }
@@ -36,6 +38,7 @@ func (ec *Client) Close() {
 
 func (ec *Client) SendBundle(ctx context.Context, bundle *SendBundleArgs) (common.Hash, error) {
 	var hash common.Hash
+	ec.SetHeader("Request-Source", goSDKSource)
 	err := ec.CallContext(context.Background(), &hash, "eth_sendBundle", bundle)
 	return hash, err
 }
@@ -52,4 +55,11 @@ func (ec *Client) GetBundleByHash(ctx context.Context, hash common.Hash) (*Bundl
 
 	err := ec.CallContext(context.Background(), &bundle, "txpool_getBundleByHash", hash)
 	return &bundle, err
+}
+
+func (ec *Client) GetStatus(ctx context.Context) (*Status, error) {
+	var status Status
+
+	err := ec.CallContext(context.Background(), &status, "eth_validatorStatus")
+	return &status, err
 }
