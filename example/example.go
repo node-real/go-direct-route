@@ -4,13 +4,13 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"github.com/ethereum/go-ethereum/common"
 	"log"
 	"math/big"
 	"strings"
 	"time"
 
 	"github.com/ethereum/go-ethereum/accounts/abi"
+	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/common/hexutil"
 	"github.com/ethereum/go-ethereum/ethclient"
 	"github.com/ethereum/go-ethereum/params"
@@ -36,6 +36,16 @@ func getBundlePriceDemo() {
 	fmt.Printf("get bundle price price %s\n", price.String())
 }
 
+func getServiceStatus() {
+	directClient, _ := client.Dial(directRouteEndPoint)
+	s, err := directClient.GetStatus(context.Background())
+	if err != nil {
+		panic(err)
+	}
+	bz, _ := json.Marshal(s)
+	fmt.Println(string(bz))
+}
+
 /**
 In this case, we try to use two accounts to send BNB to each other,
 the two transaction should be all success or all failed.
@@ -43,7 +53,10 @@ the two transaction should be all success or all failed.
 func sendBNBByBundleDemo() {
 	directClient, _ := client.Dial(directRouteEndPoint)
 	rpcClient, _ := ethclient.Dial(rpcEndPoint)
-	price, _ := directClient.BundlePrice(context.Background())
+	price, err := directClient.BundlePrice(context.Background())
+	if err != nil {
+		log.Fatalf("failed to get bundle price%v", err)
+	}
 
 	n1, _ := rpcClient.PendingNonceAt(context.Background(), account1.Addr)
 	n2, _ := rpcClient.PendingNonceAt(context.Background(), account2.Addr)
@@ -79,7 +92,7 @@ func sendBNBByBundleDemo() {
 	fmt.Printf("The bundle is %s\n", string(bz))
 
 	found := false
-	for i := 0; i < 21; i++ {
+	for i := 0; i < 42; i++ {
 		r1, err1 := rpcClient.TransactionReceipt(context.Background(), hash1)
 		r2, err2 := rpcClient.TransactionReceipt(context.Background(), hash2)
 		if r1 != nil && err1 == nil && r2 != nil && err2 == nil {
@@ -145,7 +158,7 @@ func sendBUSDByBundleDemo() {
 	fmt.Printf("The bundle is %s\n", string(bz))
 
 	found := false
-	for i := 0; i < 30; i++ {
+	for i := 0; i < 60; i++ {
 		r1, err1 := rpcClient.TransactionReceipt(context.Background(), hash1)
 		r2, err2 := rpcClient.TransactionReceipt(context.Background(), hash2)
 		if r1 != nil && err1 == nil && r2 != nil && err2 == nil {
