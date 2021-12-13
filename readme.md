@@ -8,7 +8,7 @@ It includes the following core components:
 
 ## What is Direct Route
 
-NodeReal MEV is a permissionless, transparent service for efficient MEV extraction on EVM blockchains. It achieves following goals:
+Direct Route achieves following goals:
 1. **Transaction privacy**. Transactions submitted through MEV can never be detected by others before they have been included in a block. 
 2. **First-price sealed-bid auction**. It allows users to privately communicate their bid and granular transaction order preference.
 3. **No paying for failed transactions**. Losing bids are never included in a block, thus never exposed to the public and no need to pay any transaction fees.
@@ -48,25 +48,30 @@ price, _ := client.BundlePrice(context.Background())
 
 2. Send bundle
 ```
-tx1, hash1, _ := utils.SignTransaction(account1, account2.Addr, valueToTransfer, nil, n1, gasLimit, price, chainId)
-tx2, hash2, _ := utils.SignTransaction(account2, account1.Addr, valueToTransfer, nil, n2, gasLimit, price, chainId)
+	data1, _ := bep20ABI.Pack("transfer", account2.Addr, big.NewInt(1))
+	data2, _ := bep20ABI.Pack("transfer", account2.Addr, big.NewInt(1))
 
-maxTime := uint64(time.Now().Unix() + 80)
+	tx1, hash1, _ := utils.SignTransaction(account1, common.HexToAddress("0xe9e7cea3dedca5984780bafc599bd69add087d56"), valueToTransfer, data1, n1, gasLimit, price, chainId)
+	tx2, hash2, _ := utils.SignTransaction(account1, common.HexToAddress("0xe9e7cea3dedca5984780bafc599bd69add087d56"), valueToTransfer, data2, n1+1, gasLimit, price, chainId)
+	maxTime := uint64(time.Now().Unix() + 80)
+	minTime := uint64(time.Now().Unix() + 20)
 
-bundle := &client.SendBundleArgs{
-    Txs:               []string{hexutil.Encode(tx1), hexutil.Encode(tx2)},
-    MaxBlockNumber:    "",
-    MinTimestamp:      nil,
-    MaxTimestamp:      &maxTime,
-    RevertingTxHashes: nil,
-}
-bundleHash, err := directClient.SendBundle(context.Background(), bundle)
+	bundle := &client.SendBundleArgs{
+		Txs:               []string{hexutil.Encode(tx1), hexutil.Encode(tx2)},
+		MaxBlockNumber:    "",
+		MinTimestamp:      &minTime,
+		MaxTimestamp:      &maxTime,
+		RevertingTxHashes: []common.Hash{hash2},
+	}
+	bundleHash, err := directClient.SendBundle(context.Background(), bundle)
 ```
 
 After the bundle is successfully submitted, you may need wait at lest 3-60 seconds before the transaction been verified on chain.
 
-So please use `MaxBlockNumber` and `MaxTimestamp` a relative lager one, better 60 seconds later, otherwise nodereal may 
+So please use `MaxBlockNumber` and `MaxTimestamp` a relative lager one, better 60 seconds later, otherwise DR may 
 get no chance to include the bundle.
+
+Note that only one tx sender is allowed with one bundle.
 
 3. Query bundle
 
