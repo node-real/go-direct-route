@@ -9,11 +9,11 @@ It includes the following core components:
 ## What is Direct Route
 
 Direct Route achieves following goals:
-1. **Transaction privacy**. Transactions submitted through MEV can never be detected by others before they have been included in a block. 
+1. **Transaction privacy**. Transactions submitted through Direct Route can never be detected by others before they have been included in a block. 
 2. **First-price sealed-bid auction**. It allows users to privately communicate their bid and granular transaction order preference.
 3. **No paying for failed transactions**. Losing bids are never included in a block, thus never exposed to the public and no need to pay any transaction fees.
 4. **Bundle transactions**. Multiple transactions are submitted as a bundle, the bundle transactions are all successfully validated on chain in the same block or never included on chain at all.
-5. **Efficiency**. MEV extraction is performed without causing unnecessary network or chain congestion.
+5. **Efficiency**. Bundle is performed without causing unnecessary network or chain congestion.
 
 
 ## Install
@@ -68,7 +68,7 @@ price, _ := client.BundlePrice(context.Background())
 
 After the bundle is successfully submitted, you may need wait at lest 3-60 seconds before the transaction been verified on chain.
 
-So please use `MaxBlockNumber` and `MaxTimestamp` a relative lager one, better 60 seconds later, otherwise DR may 
+So please use `MaxBlockNumber` and `MaxTimestamp` a relative lager one, better 60 seconds later, otherwise Direct Route may 
 get no chance to include the bundle.
 
 Note that only one tx sender is allowed with one bundle.
