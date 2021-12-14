@@ -59,14 +59,13 @@ func sendBNBByBundleDemo() {
 	}
 
 	n1, _ := rpcClient.PendingNonceAt(context.Background(), account1.Addr)
-	n2, _ := rpcClient.PendingNonceAt(context.Background(), account2.Addr)
 
 	chainId := big.NewInt(56)
 	valueToTransfer := big.NewInt(100 * params.GWei)
 	gasLimit := uint64(23000)
 
 	tx1, hash1, _ := utils.SignTransaction(account1, account2.Addr, valueToTransfer, nil, n1, gasLimit, price, chainId)
-	tx2, hash2, _ := utils.SignTransaction(account2, account1.Addr, valueToTransfer, nil, n2, gasLimit, price, chainId)
+	tx2, hash2, _ := utils.SignTransaction(account1, account2.Addr, valueToTransfer, nil, n1+1, gasLimit, price, chainId)
 
 	maxTime := uint64(time.Now().Unix() + 80)
 
@@ -119,7 +118,6 @@ func sendBUSDByBundleDemo() {
 	price, _ := directClient.BundlePrice(context.Background())
 
 	n1, _ := rpcClient.PendingNonceAt(context.Background(), account1.Addr)
-	n2, _ := rpcClient.PendingNonceAt(context.Background(), account2.Addr)
 
 	chainId := big.NewInt(56)
 	valueToTransfer := big.NewInt(0)
@@ -128,10 +126,10 @@ func sendBUSDByBundleDemo() {
 	bep20ABI, _ := abi.JSON(strings.NewReader(eabi.BEP20ABI))
 
 	data1, _ := bep20ABI.Pack("transfer", account2.Addr, big.NewInt(1))
-	data2, _ := bep20ABI.Pack("transfer", account1.Addr, big.NewInt(1))
+	data2, _ := bep20ABI.Pack("transfer", account2.Addr, big.NewInt(1))
 
 	tx1, hash1, _ := utils.SignTransaction(account1, common.HexToAddress("0xe9e7cea3dedca5984780bafc599bd69add087d56"), valueToTransfer, data1, n1, gasLimit, price, chainId)
-	tx2, hash2, _ := utils.SignTransaction(account2, common.HexToAddress("0xe9e7cea3dedca5984780bafc599bd69add087d56"), valueToTransfer, data2, n2, gasLimit, price, chainId)
+	tx2, hash2, _ := utils.SignTransaction(account1, common.HexToAddress("0xe9e7cea3dedca5984780bafc599bd69add087d56"), valueToTransfer, data2, n1+1, gasLimit, price, chainId)
 
 	maxTime := uint64(time.Now().Unix() + 80)
 	minTime := uint64(time.Now().Unix() + 20)
@@ -175,5 +173,5 @@ func sendBUSDByBundleDemo() {
 }
 
 func main() {
-	sendBUSDByBundleDemo()
+	sendBNBByBundleDemo()
 }
