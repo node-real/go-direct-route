@@ -39,27 +39,27 @@ func (ec *Client) Close() {
 func (ec *Client) SendBundle(ctx context.Context, bundle *SendBundleArgs) (common.Hash, error) {
 	var hash common.Hash
 	ec.SetHeader("Request-Source", goSDKSource)
-	err := ec.CallContext(context.Background(), &hash, "eth_sendBundle", bundle)
+	err := ec.CallContext(ctx, &hash, "eth_sendBundle", bundle)
 	return hash, err
 }
 
 func (ec *Client) BundlePrice(ctx context.Context) (*big.Int, error) {
 	var bundlePrice big.Int
 
-	err := ec.CallContext(context.Background(), &bundlePrice, "eth_bundlePrice")
+	err := ec.CallContext(ctx, &bundlePrice, "eth_bundlePrice")
 	return &bundlePrice, err
 }
 
 func (ec *Client) GetBundleByHash(ctx context.Context, hash common.Hash) (*Bundle, error) {
 	var bundle Bundle
 
-	err := ec.CallContext(context.Background(), &bundle, "txpool_getBundleByHash", hash)
+	err := ec.CallContext(ctx, &bundle, "txpool_getBundleByHash", hash)
 	return &bundle, err
 }
 
 func (ec *Client) GetStatus(ctx context.Context) (*Status, error) {
 	var status Status
 
-	err := ec.CallContext(context.Background(), &status, "eth_validatorStatus")
+	err := ec.CallContext(ctx, &status, "eth_validatorStatus")
 	return &status, err
 }
