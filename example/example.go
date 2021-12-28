@@ -21,7 +21,14 @@ import (
 )
 
 var rpcEndPoint = "https://bsc-dataseed.binance.org"
+
+// Testnet endpoint
+//var rpcEndPoint = "https://data-seed-prebsc-1-s1.binance.org:8545"
+
 var directRouteEndPoint = "https://api.nodereal.io/direct-route"
+
+// Testnet endpoint
+//var directRouteEndPoint = "https://testnet-api.nodereal.io/direct-route"
 
 var account1, _ = utils.FromHexKey("input your private key1 here")
 var account2, _ = utils.FromHexKey("input your private key2 here")
@@ -61,6 +68,9 @@ func sendBNBByBundleDemo() {
 	n1, _ := rpcClient.PendingNonceAt(context.Background(), account1.Addr)
 
 	chainId := big.NewInt(56)
+
+	// testnet chain id
+	//chainId := big.NewInt(97)
 	valueToTransfer := big.NewInt(100 * params.GWei)
 	gasLimit := uint64(23000)
 
@@ -120,6 +130,9 @@ func sendBUSDByBundleDemo() {
 	n1, _ := rpcClient.PendingNonceAt(context.Background(), account1.Addr)
 
 	chainId := big.NewInt(56)
+
+	// testnet chain id
+	//chainId := big.NewInt(97)
 	valueToTransfer := big.NewInt(0)
 	gasLimit := uint64(70000)
 
