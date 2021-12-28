@@ -79,6 +79,11 @@ Note that only one tx sender is allowed with one bundle.
 bundle, _ := directClient.GetBundleByHash(context.Background(), bundleHash)
 ```
 
+### Direct-Route on Testnet
+
+You can try Direct-Route Testnet by changing the endpoint to: `https://testnet-api.nodereal.io/direct-route`
+
+Please note you should use the BSC testnet RPC and use testnet chainId(97) when sign the transaction.
 
 ### SDK Example
 
