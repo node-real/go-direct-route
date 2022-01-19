@@ -40,7 +40,7 @@ func getBundlePriceDemo() {
 	if err != nil {
 		log.Fatal(fmt.Sprintf("failed to get bundle price %v", err))
 	}
-	fmt.Printf("get bundle price price %s\n", price.String())
+	fmt.Printf("get bundle price: %s, minmal gas price: %s\n", price.BundlePrice.String(), price.MinmalGasPrice.String())
 }
 
 func getServiceStatus() {
@@ -60,9 +60,13 @@ the two transaction should be all success or all failed.
 func sendBNBByBundleDemo() {
 	directClient, _ := client.Dial(directRouteEndPoint)
 	rpcClient, _ := ethclient.Dial(rpcEndPoint)
-	price, err := directClient.BundlePrice(context.Background())
+	bundlePrice, err := directClient.BundlePrice(context.Background())
 	if err != nil {
 		log.Fatalf("failed to get bundle price%v", err)
+	}
+	price := bundlePrice.BundlePrice
+	if price.Cmp(bundlePrice.MinmalGasPrice) < 0 {
+		price = bundlePrice.MinmalGasPrice
 	}
 
 	n1, _ := rpcClient.PendingNonceAt(context.Background(), account1.Addr)
@@ -125,7 +129,14 @@ we want the bundle been verified on chain during [now+20 second, now+80 second].
 func sendBUSDByBundleDemo() {
 	directClient, _ := client.Dial(directRouteEndPoint)
 	rpcClient, _ := ethclient.Dial(rpcEndPoint)
-	price, _ := directClient.BundlePrice(context.Background())
+	bundlePrice, err := directClient.BundlePrice(context.Background())
+	if err != nil {
+		log.Fatalf("failed to get bundle price%v", err)
+	}
+	price := bundlePrice.BundlePrice
+	if price.Cmp(bundlePrice.MinmalGasPrice) < 0 {
+		price = bundlePrice.MinmalGasPrice
+	}
 
 	n1, _ := rpcClient.PendingNonceAt(context.Background(), account1.Addr)
 

@@ -30,3 +30,9 @@ type Status struct {
 	Status     int64            `json:"status"`
 	Validators map[string]int64 `json:"validators"`
 }
+
+// BundlePrice is the response for the API `eth_bundlePrice`
+type BundlePrice struct {
+	BundlePrice    *big.Int `json:"bundlePrice"`
+	MinmalGasPrice *big.Int `json:"minmalGasPrice"`
+}

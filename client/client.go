@@ -2,7 +2,6 @@ package client
 
 import (
 	"context"
-	"math/big"
 
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/rpc"
@@ -43,8 +42,8 @@ func (ec *Client) SendBundle(ctx context.Context, bundle *SendBundleArgs) (commo
 	return hash, err
 }
 
-func (ec *Client) BundlePrice(ctx context.Context) (*big.Int, error) {
-	var bundlePrice big.Int
+func (ec *Client) BundlePrice(ctx context.Context) (*BundlePrice, error) {
+	var bundlePrice BundlePrice
 
 	err := ec.CallContext(ctx, &bundlePrice, "eth_bundlePrice")
 	return &bundlePrice, err
