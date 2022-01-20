@@ -98,6 +98,9 @@ to each other, the second transaction is allowed to be failed,
 and the bundle should be verified on chain during [now+20 second, now+80 second].
 This case shows you how to interact with smart contract through direct-route,
 and how to control the timing to be verified.
+4. `sendBNBByBundleWithDepositCoinbaseDemo()`. In this case, we use two different 
+accounts to send BNB to each other, and including deposit BNB to coinbase to increase *Bundle Price* the two transactions should be all 
+successful or all failed.
 
 If you want to try with above examples, what you need to do is just to 
 replace the private keys of `account1` and `account2` in `example.go`
