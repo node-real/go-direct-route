@@ -33,6 +33,6 @@ type Status struct {
 
 // BundlePrice is the response for the API `eth_bundlePrice`
 type BundlePrice struct {
-	BundlePrice    *big.Int `json:"bundlePrice"`
-	MinmalGasPrice *big.Int `json:"minmalGasPrice"`
+	BundlePrice     *big.Int `json:"bundlePrice"`
+	MinimalGasPrice *big.Int `json:"minimalGasPrice"`
 }

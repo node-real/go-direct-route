@@ -38,7 +38,7 @@ func getBundlePriceDemo() {
 	if err != nil {
 		log.Fatal(fmt.Sprintf("failed to get bundle price %v", err))
 	}
-	fmt.Printf("get bundle price: %s, minmal gas price: %s\n", price.BundlePrice.String(), price.MinmalGasPrice.String())
+	fmt.Printf("get bundle price: %s, minmal gas price: %s\n", price.BundlePrice.String(), price.MinimalGasPrice.String())
 }
 
 func getServiceStatus() {
@@ -63,8 +63,8 @@ func sendBNBByBundleDemo() {
 		log.Fatalf("failed to get bundle price%v", err)
 	}
 	price := bundlePrice.BundlePrice
-	if price.Cmp(bundlePrice.MinmalGasPrice) < 0 {
-		price = bundlePrice.MinmalGasPrice
+	if price.Cmp(bundlePrice.MinimalGasPrice) < 0 {
+		price = bundlePrice.MinimalGasPrice
 	}
 
 	n1, _ := rpcClient.PendingNonceAt(context.Background(), account1.Addr)
@@ -132,8 +132,8 @@ func sendBUSDByBundleDemo() {
 		log.Fatalf("failed to get bundle price%v", err)
 	}
 	price := bundlePrice.BundlePrice
-	if price.Cmp(bundlePrice.MinmalGasPrice) < 0 {
-		price = bundlePrice.MinmalGasPrice
+	if price.Cmp(bundlePrice.MinimalGasPrice) < 0 {
+		price = bundlePrice.MinimalGasPrice
 	}
 
 	n1, _ := rpcClient.PendingNonceAt(context.Background(), account1.Addr)
@@ -202,8 +202,8 @@ func sendBNBByBundleWithDepositCoinbaseDemo() {
 		log.Fatalf("failed to get bundle price%v", err)
 	}
 	price := bundlePrice.BundlePrice
-	if price.Cmp(bundlePrice.MinmalGasPrice) < 0 {
-		price = bundlePrice.MinmalGasPrice
+	if price.Cmp(bundlePrice.MinimalGasPrice) < 0 {
+		price = bundlePrice.MinimalGasPrice
 	}
 	n1, _ := rpcClient.PendingNonceAt(context.Background(), account1.Addr)
 
