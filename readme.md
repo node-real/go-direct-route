@@ -1,3 +1,9 @@
+# ⛔️ DEPRECATED
+
+This repository is now deprecated. 
+
+The Direct Route service is no longer supported.
+
 # Direct Route Go SDK
 
 The Direct Route GO SDK provides a thin wrapper around the Direct Route API for sending private transactions.
