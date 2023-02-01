@@ -1,3 +1,9 @@
+# ⛔️ DEPRECATED
+
+This repository is now deprecated. 
+
+The Direct Route service is no longer supported.
+
 # Direct Route Go SDK
 
 The Direct Route GO SDK provides a thin wrapper around the Direct Route API for sending private transactions.
@@ -85,6 +91,14 @@ You can try Direct-Route Testnet by changing the endpoint to: `https://testnet-a
 
 Please note you should use the BSC testnet RPC and use testnet chainId(97) when sign the transaction.
 
+### Deposit coinbase contract
+
+If you want to increase your *Bundle Price*, you can use this contract, which will transfer your provided *BNB* to the coinbase responsible for mining your bundle.
+please refer the `sendBNBByBundleWithDepositCoinbaseDemo()` in example.go.
+
+1. mainnet: `0xB3BB00B9785f35D0BE13B2BD91C8e3742D9Ab03a`
+2. testnet: `0xE7febD44315508a1100E1a06701e7e0Ae5e325Bc`
+
 ### SDK Example
 
 We provide three demos in `example.go`:
@@ -98,6 +112,9 @@ to each other, the second transaction is allowed to be failed,
 and the bundle should be verified on chain during [now+20 second, now+80 second].
 This case shows you how to interact with smart contract through direct-route,
 and how to control the timing to be verified.
+4. `sendBNBByBundleWithDepositCoinbaseDemo()`. In this case, we use two different 
+accounts to send BNB to each other, and including deposit BNB to coinbase to increase *Bundle Price* the two transactions should be all 
+successful or all failed.
 
 If you want to try with above examples, what you need to do is just to 
 replace the private keys of `account1` and `account2` in `example.go`
