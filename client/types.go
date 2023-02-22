@@ -24,6 +24,8 @@ type Bundle struct {
 	RevertingTxHashes []common.Hash
 	Hash              common.Hash
 	Price             *big.Int
+	Status            int64
+	ErrMsg            string
 }
 
 type Status struct {
